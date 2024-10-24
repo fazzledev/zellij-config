@@ -56,18 +56,17 @@ layout {
     }
   }
 
-  tab name="zellij" {
+  tab name="zellij" cwd="~/.config/zellij/layouts/" {
     pane command="nvim" {
       start_suspended true
-      args "~/.config/zellij"
+      args "."
     }
+
+    pane size=5 name="zellij shell"
   }
 
   tab name="zsh" {
-    pane command="nvim" {
-      start_suspended true
-      args "~/.zshrc"
-    }
+    pane edit="~/.zshrc"
   }
 }
 
