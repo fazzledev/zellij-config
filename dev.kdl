@@ -1,0 +1,73 @@
+layout {
+  default_tab_template {
+    pane size=2 borderless=true {
+      plugin location="zellij:compact-bar"
+    }
+    children
+    pane size=2 borderless=true {
+      plugin location="zellij:status-bar"
+    }
+  }
+
+  tab name="test" {
+    pane command="/home/fazil/.asdf/shims/rails" {
+      start_suspended true
+      args "test";
+    }
+
+    pane command="/home/fazil/.asdf/shims/rails" {
+      start_suspended true
+      args "test:all";
+    }
+  }
+
+  tab name="server" {
+    pane command="/home/fazil/.asdf/shims/foreman" {
+      start_suspended true
+      args "start" "-f" "Procfile.dev";
+    }
+  }
+
+  tab name="editor" {
+    pane command="nvim" {
+      start_suspended true
+      args "."
+    }
+  }
+
+  tab name="shell" focus=true {
+    pane
+  }
+
+  tab name="prod" {
+    pane name="logs" command="/home/fazil/.asdf/shims/kamal" {
+      start_suspended true
+      args "app" "logs" "-f";
+    }
+
+    pane name="console" command="/home/fazil/.asdf/shims/kamal" {
+      start_suspended true
+      args "app" "exec" "-i" "bin/rails" "console"
+    }
+
+    pane name="deploy" command="/home/fazil/.asdf/shims/kamal" {
+      start_suspended true
+      args "deploy"
+    }
+  }
+
+  tab name="zellij" {
+    pane command="nvim" {
+      start_suspended true
+      args "~/.config/zellij"
+    }
+  }
+
+  tab name="zsh" {
+    pane command="nvim" {
+      start_suspended true
+      args "~/.zshrc"
+    }
+  }
+}
+
