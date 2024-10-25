@@ -9,6 +9,13 @@ layout {
     }
   }
 
+  tab name="server" {
+    pane command="/home/fazil/.asdf/shims/foreman" {
+      start_suspended true
+      args "start" "-f" "Procfile.dev";
+    }
+  }
+
   tab name="test" {
     pane command="/home/fazil/.asdf/shims/rails" {
       start_suspended true
@@ -21,12 +28,6 @@ layout {
     }
   }
 
-  tab name="server" {
-    pane command="/home/fazil/.asdf/shims/foreman" {
-      start_suspended true
-      args "start" "-f" "Procfile.dev";
-    }
-  }
 
   tab name="editor" {
     pane command="nvim" {
