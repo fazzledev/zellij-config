@@ -63,7 +63,7 @@ layout {
       args "."
     }
 
-    pane size=5 name="zellij shell"
+    pane size="10%" name="zellij shell"
   }
 
   tab name="zsh" {
