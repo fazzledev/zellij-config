@@ -51,9 +51,9 @@ layout {
       args "app" "exec" "-i" "bin/rails" "console"
     }
 
-    pane name="deploy" command="/home/fazil/.asdf/shims/kamal" {
+    pane name="deploy" command="zsh" {
       start_suspended true
-      args "deploy"
+      args "-c" "source ~/.env.sh && /home/fazil/.asdf/shims/kamal deploy"
     }
   }
 
