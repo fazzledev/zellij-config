@@ -24,7 +24,7 @@ layout {
 
     pane command="/home/fazil/.asdf/shims/rails" {
       start_suspended true
-      args "test:all";
+      args "test:system";
     }
   }
 
