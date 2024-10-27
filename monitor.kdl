@@ -1,0 +1,22 @@
+layout {
+  default_tab_template {
+    pane size=2 borderless=true {
+      plugin location="zellij:compact-bar"
+    }
+    children
+    pane size=2 borderless=true {
+      plugin location="zellij:status-bar"
+    }
+  }
+
+  tab name="monitor" split_direction="vertical" {
+    pane name="htop" command="htop" {
+      start_suspended true;
+    }
+
+    pane name="sensors" command="watch sensors" {
+      start_suspended true;
+    }
+  }
+}
+
