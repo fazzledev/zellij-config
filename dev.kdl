@@ -53,17 +53,24 @@ layout {
     pane name="dotenv kamal deploy" size="10%"
   }
 
-  tab name="zellij" cwd="~/.config/zellij/layouts/" {
-    pane command="nvim" {
-      start_suspended true
-      args "."
+  tab name="whetstone" split_direction="vertical" {
+    pane {
+      pane name="zellij editor" command="nvim" cwd="~/.config/zellij/layouts/" {
+        start_suspended true;
+        args "."
+      }
+
+      pane size="10%" cwd="~/.config/zellij/layouts/"
     }
 
-    pane size="10%" name="zellij shell"
-  }
+    pane {
+      pane name="shell editor" command="nvim" cwd="~/shell/" {
+        start_suspended true;
+        args "."
+      }
 
-  tab name="zsh" {
-    pane edit="~/.zshrc"
+      pane size="10%" cwd="~/shell/"
+    }
   }
 }
 
