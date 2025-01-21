@@ -9,48 +9,75 @@ layout {
     }
   }
 
-  tab name="server" {
-    pane command="/home/fazil/.asdf/shims/foreman" {
+  tab name="editor" {
+    pane name="cursor" size="10%" command="bash" {
       start_suspended true
-      args "start" "-f" "Procfile.dev";
+      args "-c" "exec $(ls -t ~/Downloads/cursor-*.AppImage | head -n1) ."
+    }
+    pane name="neovim" command="nvim" {
+      start_suspended true
+      args "."
+    }
+  }
+
+  tab name="localhost" {
+    pane name="foremangrok" {
+      command "./foremangrok"
+      start_suspended true
+    }
+
+    pane name="foreman" size="10%" command="/home/fazil/.asdf/shims/foreman" {
+      start_suspended true
+      args "start" "-f" "Procfile.dev"
+    }
+
+    pane name="rails" size="10%" command="/home/fazil/.asdf/shims/rails" {
+      start_suspended true
+      args "s" "-p" "5000"
+    }
+
+    pane name="ngrok" size="10%" command="/usr/local/bin/ngrok" {
+      start_suspended true
+      args "http" "5000"
     }
   }
 
   tab name="test" {
     pane command="/home/fazil/.asdf/shims/rails" {
       start_suspended true
-      args "test";
+      args "test" "-v";
     }
 
     pane command="/home/fazil/.asdf/shims/rails" {
       start_suspended true
-      args "test:system";
+      args "test:system" "-v";
     }
   }
 
-
-  tab name="editor" {
-    pane command="nvim" {
-      start_suspended true
-      args "."
-    }
-  }
-
-  tab name="shell" focus=true {
+  tab name="dev" focus=true {
     pane
+
+    pane size="10%" command="/home/fazil/.asdf/shims/rails" {
+      start_suspended true
+      args "console";
+    }
   }
 
   tab name="prod" {
-    pane name="logs" command="/home/fazil/.asdf/shims/kamal" {
+    pane name="dotenv kamal deploy" {
+      command "bash"
+      args "-c" "cd \"$(dirname \"$PWD\")/deploy.$(basename \"$PWD\")\" && exec $SHELL"
+    }
+
+    pane name="logs" command="/home/fazil/.asdf/shims/kamal" size="10%" {
       start_suspended true
       args "app" "logs" "-f";
     }
 
-    pane name="console" command="/home/fazil/.asdf/shims/kamal" {
+    pane name="console" command="/home/fazil/.asdf/shims/kamal" size="10%" {
       start_suspended true
       args "app" "exec" "-i" "bin/rails" "console"
     }
-    pane name="dotenv kamal deploy" size="10%"
   }
 
   tab name="whetstone" split_direction="vertical" {
@@ -70,6 +97,16 @@ layout {
       }
 
       pane size="10%" cwd="~/shell/"
+    }
+  }
+
+  tab name="monitor" {
+    pane name="htop" command="htop" {
+      start_suspended true;
+    }
+
+    pane name="sensors" command="watch sensors" {
+      start_suspended true;
     }
   }
 }
