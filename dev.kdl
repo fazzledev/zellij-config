@@ -10,10 +10,11 @@ layout {
   }
 
   tab name="editor" {
-    pane name="cursor" size="10%" command="bash" {
+    pane name="cursor" size="10%" command="~/Downloads/squashfs-root/cursor" {
       start_suspended true
-      args "-c" "exec $(ls -t ~/Downloads/cursor-*.AppImage | head -n1) ."
+      args "."
     }
+
     pane name="neovim" command="nvim" {
       start_suspended true
       args "."
@@ -26,14 +27,9 @@ layout {
       start_suspended true
     }
 
-    pane name="foreman" size="10%" command="/home/fazil/.asdf/shims/foreman" {
+    pane name="rails" size="10%" command="/bin/bash" {
       start_suspended true
-      args "start" "-f" "Procfile.dev"
-    }
-
-    pane name="rails" size="10%" command="/home/fazil/.asdf/shims/rails" {
-      start_suspended true
-      args "s" "-p" "5000"
+      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bin/dev"
     }
 
     pane name="ngrok" size="10%" command="/usr/local/bin/ngrok" {
@@ -43,23 +39,23 @@ layout {
   }
 
   tab name="test" {
-    pane command="/home/fazil/.asdf/shims/rails" {
+    pane command="/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin/ruby" {
       start_suspended true
-      args "test" "-v";
+      args "bin/rails" "test" "-v";
     }
 
-    pane command="/home/fazil/.asdf/shims/rails" {
+    pane command="/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin/ruby" {
       start_suspended true
-      args "test:system" "-v";
+      args "bin/rails" "test:system" "-v";
     }
   }
 
   tab name="dev" focus=true {
     pane
 
-    pane size="10%" command="/home/fazil/.asdf/shims/rails" {
+    pane size="10%" command="/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin/ruby" {
       start_suspended true
-      args "console";
+      args "bin/rails" "console";
     }
   }
 
@@ -91,7 +87,7 @@ layout {
     }
 
     pane {
-      pane name="shell editor" command="nvim" cwd="~/shell/" {
+      pane name="shell editor" command="nvim" cwd="~/.oh-my-zsh/custom" {
         start_suspended true;
         args "."
       }
