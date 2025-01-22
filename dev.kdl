@@ -29,7 +29,7 @@ layout {
 
     pane name="rails" size="10%" command="/bin/bash" {
       start_suspended true
-      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec bin/dev"
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec bin/dev"
     }
 
     pane name="ngrok" size="10%" command="/usr/local/bin/ngrok" {
@@ -41,12 +41,12 @@ layout {
   tab name="test" {
     pane command="/bin/bash" {
       start_suspended true
-      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec rails test -v"
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec rails test -v"
     }
 
     pane command="/bin/bash" {
       start_suspended true
-      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec rails test:system -v"
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec rails test:system -v"
     }
   }
 
@@ -55,7 +55,7 @@ layout {
 
     pane size="10%" command="/bin/bash" {
       start_suspended true
-      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec rails console"
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec rails console"
     }
   }
 
@@ -67,12 +67,12 @@ layout {
 
     pane name="logs" command="/bin/bash" size="10%" {
       start_suspended true
-      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec kamal app logs -f"
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec kamal app logs -f"
     }
 
     pane name="console" command="/bin/bash" size="10%" {
       start_suspended true
-      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec kamal app exec -i bin/rails console"
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec kamal app exec -i bin/rails console"
     }
   }
 
