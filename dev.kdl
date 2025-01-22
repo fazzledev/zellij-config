@@ -29,7 +29,7 @@ layout {
 
     pane name="rails" size="10%" command="/bin/bash" {
       start_suspended true
-      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bin/dev"
+      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec bin/dev"
     }
 
     pane name="ngrok" size="10%" command="/usr/local/bin/ngrok" {
@@ -39,23 +39,23 @@ layout {
   }
 
   tab name="test" {
-    pane command="/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin/ruby" {
+    pane command="/bin/bash" {
       start_suspended true
-      args "bin/rails" "test" "-v";
+      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec rails test -v"
     }
 
-    pane command="/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin/ruby" {
+    pane command="/bin/bash" {
       start_suspended true
-      args "bin/rails" "test:system" "-v";
+      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec rails test:system -v"
     }
   }
 
   tab name="dev" focus=true {
     pane
 
-    pane size="10%" command="/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin/ruby" {
+    pane size="10%" command="/bin/bash" {
       start_suspended true
-      args "bin/rails" "console";
+      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec rails console"
     }
   }
 
@@ -65,14 +65,14 @@ layout {
       args "-c" "cd \"$(dirname \"$PWD\")/deploy.$(basename \"$PWD\")\" && exec $SHELL"
     }
 
-    pane name="logs" command="/home/fazil/.asdf/shims/kamal" size="10%" {
+    pane name="logs" command="/bin/bash" size="10%" {
       start_suspended true
-      args "app" "logs" "-f";
+      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec kamal app logs -f"
     }
 
-    pane name="console" command="/home/fazil/.asdf/shims/kamal" size="10%" {
+    pane name="console" command="/bin/bash" size="10%" {
       start_suspended true
-      args "app" "exec" "-i" "bin/rails" "console"
+      args "-c" "PATH=/home/fazil/.local/share/mise/installs/ruby/3.4.1/bin:$PATH bundle exec kamal app exec -i bin/rails console"
     }
   }
 
