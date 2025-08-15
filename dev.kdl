@@ -10,8 +10,8 @@ layout {
   }
 
   tab name="editor" {
-    pane name="cursor" size="10%" command="~/Downloads/squashfs-root/cursor" {
-      start_suspended true
+    pane name="cursor" size="10%" command="~/Downloads/Cursor-0.50.5-x86_64.AppImage" {
+      // start_suspended true
       args "."
     }
 
@@ -22,31 +22,38 @@ layout {
   }
 
   tab name="localhost" {
-    pane name="foremangrok" {
-      command "./foremangrok"
-      start_suspended true
+    pane name="dev" command="/bin/bash" {
+      // start_suspended true
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/dev"
     }
 
-    pane name="rails" size="10%" command="/bin/bash" {
-      start_suspended true
-      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec bin/dev"
+    pane name="jobs" size="10%" command="/bin/bash" {
+      // start_suspended true
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/jobs"
     }
 
-    pane name="ngrok" size="10%" command="/usr/local/bin/ngrok" {
+    pane name="ngrok" size="10%" command="/snap/bin/ngrok" {
       start_suspended true
-      args "http" "5000"
+      args "http" "3000"
     }
   }
 
   tab name="test" {
-    pane command="/bin/bash" {
+    pane name="bin/test" command="/bin/bash" {
       start_suspended true
-      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec rails test -v"
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/test"
     }
 
-    pane command="/bin/bash" {
+    pane size="10%" command="tail" {
       start_suspended true
-      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec rails test:system -v"
+      args "-f" "log/test.log"
+    }
+  }
+
+  tab name="clai" {
+    pane name="gemini" command="/bin/bash" {
+      start_suspended true
+      args "-c" "eval \"$(mise activate bash)\" && gemini"
     }
   }
 
@@ -60,9 +67,9 @@ layout {
   }
 
   tab name="prod" {
-    pane name="dotenv kamal deploy" {
-      command "bash"
-      args "-c" "cd \"$(dirname \"$PWD\")/deploy.$(basename \"$PWD\")\" && exec $SHELL"
+    pane name="deploy" command="/bin/bash" {
+      start_suspended true
+      args "-c" "cd ../$(basename \"$PWD\")--deploy && git pull && PATH=$(dirname $(mise which ruby)):$PATH bundle exec kamal deploy"
     }
 
     pane name="logs" command="/bin/bash" size="10%" {
@@ -74,6 +81,16 @@ layout {
       start_suspended true
       args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec kamal app exec -i bin/rails console"
     }
+
+    pane name="ssh" command="ssh" size="10%" {
+      start_suspended true
+      args "root@server.reportcard.pro"
+    }
+  }
+
+  tab name="libs" {
+    pane name="cropper" cwd="lib/omr_cropper"
+    pane name="checker" cwd="lib/omr_checker"
   }
 
   tab name="whetstone" split_direction="vertical" {
