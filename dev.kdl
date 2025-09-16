@@ -10,14 +10,14 @@ layout {
   }
 
   tab name="editor" {
-    pane name="cursor" size="10%" command="~/Downloads/Cursor-0.50.5-x86_64.AppImage" {
-      // start_suspended true
+    pane name="cursor" size="10%" command="cursor" {
+      start_suspended true
       args "."
     }
 
-    pane name="neovim" command="nvim" {
+    pane name="neovim" command="$TERMINAL" {
       start_suspended true
-      args "."
+      args "-e" "nvim" "."
     }
   }
 
