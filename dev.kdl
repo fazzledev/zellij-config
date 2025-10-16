@@ -93,24 +93,13 @@ layout {
     pane name="checker" cwd="lib/omr_checker"
   }
 
-  tab name="whetstone" split_direction="vertical" {
-    pane {
-      pane name="zellij editor" command="nvim" cwd="~/.config/zellij/layouts/" {
-        start_suspended true;
-        args "."
-      }
-
-      pane size="10%" cwd="~/.config/zellij/layouts/"
+  tab name="whetstone" {
+    pane name="zellij editor" command="nvim" cwd="~/.config/zellij/layouts/" {
+      start_suspended true;
+      args "."
     }
 
-    pane {
-      pane name="shell editor" command="nvim" cwd="~/.oh-my-zsh/custom" {
-        start_suspended true;
-        args "."
-      }
-
-      pane size="10%" cwd="~/shell/"
-    }
+    pane size="10%" cwd="~/.config/zellij/layouts/" command="zsh"
   }
 
   tab name="monitor" {
