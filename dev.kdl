@@ -58,7 +58,7 @@ layout {
   }
 
   tab name="dev" focus=true {
-    pane
+    pane name="shell" command="zsh"
 
     pane size="10%" command="/bin/bash" {
       start_suspended true
