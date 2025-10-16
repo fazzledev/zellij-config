@@ -62,24 +62,24 @@ layout {
 
     pane size="10%" command="/bin/bash" {
       start_suspended true
-      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec rails console"
+      args "-c" "bin/rails console"
     }
   }
 
   tab name="prod" {
     pane name="deploy" command="/bin/bash" {
       start_suspended true
-      args "-c" "cd ../$(basename \"$PWD\")--deploy && git pull && PATH=$(dirname $(mise which ruby)):$PATH bundle exec kamal deploy"
+      args "-c" "cd ../$(basename \"$PWD\")--deploy && git pull && bin/kamal deploy"
     }
 
     pane name="logs" command="/bin/bash" size="10%" {
       start_suspended true
-      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec kamal app logs -f"
+      args "-c" "bin/kamal app logs -f"
     }
 
     pane name="console" command="/bin/bash" size="10%" {
       start_suspended true
-      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bundle exec kamal app exec -i bin/rails console"
+      args "-c" "bin/kamal app exec -i bin/rails console"
     }
 
     pane name="ssh" command="ssh" size="10%" {
