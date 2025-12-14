@@ -32,7 +32,7 @@ layout {
       args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/jobs"
     }
 
-    pane name="ngrok" size="10%" command="/snap/bin/ngrok" {
+    pane name="ngrok" size="10%" command="ngrok" {
       start_suspended true
       args "http" "3000"
     }
@@ -85,6 +85,28 @@ layout {
     pane name="ssh" command="ssh" size="10%" {
       start_suspended true
       args "root@server.reportcard.pro"
+    }
+  }
+
+  tab name="demo" {
+    pane name="deploy" command="/bin/bash" {
+      start_suspended true
+      args "-c" "cd ../$(basename \"$PWD\")--deploy && git fetch origin demo && git checkout -B demo origin/demo && git pull && bin/kamal deploy -d demo"
+    }
+
+    pane name="logs" command="/bin/bash" size="10%" {
+      start_suspended true
+      args "-c" "bin/kamal app logs -f -d demo"
+    }
+
+    pane name="console" command="/bin/bash" size="10%" {
+      start_suspended true
+      args "-c" "bin/kamal app exec -i bin/rails console -d demo"
+    }
+
+    pane name="ssh" command="ssh" size="10%" {
+      start_suspended true
+      args "root@server.omrreport.com"
     }
   }
 
