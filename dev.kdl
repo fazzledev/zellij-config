@@ -69,7 +69,7 @@ layout {
   tab name="prod" {
     pane name="deploy" command="/bin/bash" {
       start_suspended true
-      args "-c" "cd ../$(basename \"$PWD\")--deploy && git pull && bin/kamal deploy"
+      args "-c" "cd ../$(basename \"$PWD\")--deploy && git checkout main && git pull && bin/kamal deploy"
     }
 
     pane name="logs" command="/bin/bash" size="10%" {
