@@ -1,0 +1,137 @@
+layout {
+  default_tab_template {
+    pane size=2 borderless=true {
+      plugin location="zellij:compact-bar"
+    }
+    children
+    pane size=2 borderless=true {
+      plugin location="zellij:status-bar"
+    }
+  }
+
+  tab name="editor" {
+    pane name="cursor" size="10%" command="cursor" {
+      start_suspended false
+      args "."
+    }
+
+    pane name="neovim" command="$TERMINAL" {
+      start_suspended true
+      args "-e" "nvim" "."
+    }
+  }
+
+  tab name="localhost" {
+    pane name="dev" command="/bin/bash" {
+      // start_suspended true
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/dev"
+    }
+
+    pane name="jobs" size="10%" command="/bin/bash" {
+      // start_suspended true
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/jobs"
+    }
+
+    pane name="ngrok" size="10%" command="ngrok" {
+      start_suspended true
+      args "http" "3000"
+    }
+  }
+
+  tab name="test" {
+    pane name="bin/test" command="/bin/bash" {
+      start_suspended true
+      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/test"
+    }
+
+    pane size="10%" command="tail" {
+      start_suspended true
+      args "-f" "log/test.log"
+    }
+  }
+
+  tab name="clai" {
+    pane name="gemini" command="/bin/bash" {
+      start_suspended true
+      args "-c" "eval \"$(mise activate bash)\" && gemini"
+    }
+  }
+
+  tab name="dev" focus=true {
+    pane name="shell" command="zsh"
+
+    pane size="10%" command="/bin/bash" {
+      start_suspended true
+      args "-c" "bin/rails console"
+    }
+  }
+
+  tab name="prod" {
+    pane name="deploy" command="/bin/bash" {
+      start_suspended true
+      args "-c" "cd ../$(basename \"$PWD\")--deploy && git checkout main && git pull && bin/kamal deploy"
+    }
+
+    pane name="logs" command="/bin/bash" size="10%" {
+      start_suspended true
+      args "-c" "bin/kamal app logs -f"
+    }
+
+    pane name="console" command="/bin/bash" size="10%" {
+      start_suspended true
+      args "-c" "bin/kamal app exec -i bin/rails console"
+    }
+
+    pane name="ssh" command="ssh" size="10%" {
+      start_suspended true
+      args "root@server.reportcard.pro"
+    }
+  }
+
+  tab name="demo" {
+    pane name="deploy" command="/bin/bash" {
+      start_suspended true
+      args "-c" "cd ../$(basename \"$PWD\")--deploy && git fetch origin main demo && git checkout -B demo origin/demo && git rebase origin/main && bin/kamal deploy -d demo"
+    }
+
+    pane name="logs" command="/bin/bash" size="10%" {
+      start_suspended true
+      args "-c" "bin/kamal app logs -f -d demo"
+    }
+
+    pane name="console" command="/bin/bash" size="10%" {
+      start_suspended true
+      args "-c" "bin/kamal app exec -i bin/rails console -d demo"
+    }
+
+    pane name="ssh" command="ssh" size="10%" {
+      start_suspended true
+      args "root@server.omrreport.com"
+    }
+  }
+
+  tab name="libs" {
+    pane name="cropper" cwd="lib/omr_cropper"
+    pane name="checker" cwd="lib/omr_checker"
+  }
+
+  tab name="whetstone" {
+    pane name="zellij editor" command="nvim" cwd="~/.config/zellij/layouts/" {
+      start_suspended true;
+      args "."
+    }
+
+    pane size="10%" cwd="~/.config/zellij/layouts/" command="zsh"
+  }
+
+  tab name="monitor" {
+    pane name="htop" command="htop" {
+      start_suspended true;
+    }
+
+    pane name="sensors" command="watch sensors" {
+      start_suspended true;
+    }
+  }
+}
+
