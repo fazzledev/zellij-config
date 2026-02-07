@@ -10,128 +10,59 @@ layout {
   }
 
   tab name="editor" {
-    pane name="cursor" size="10%" command="cursor" {
-      start_suspended false
+    pane name="neovim" command="nvim" {
       args "."
-    }
-
-    pane name="neovim" command="$TERMINAL" {
-      start_suspended true
-      args "-e" "nvim" "."
     }
   }
 
   tab name="localhost" {
-    pane name="dev" command="/bin/bash" {
-      // start_suspended true
-      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/dev"
-    }
-
-    pane name="jobs" size="10%" command="/bin/bash" {
-      // start_suspended true
-      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/jobs"
-    }
-
-    pane name="ngrok" size="10%" command="ngrok" {
-      start_suspended true
-      args "http" "3000"
+    pane split_direction="vertical" {
+      pane size="50%" {
+        pane size="30%" name="docker" command="/bin/bash" {
+          args "-c" "docker-compose down -v --remove-orphans && docker-compose up --build"
+        }
+        pane name="logs" command="/bin/bash" {
+          args "-c" "docker-compose logs -f rails"
+        }
+      }
+      pane {
+        pane size="10%" name="db:setup" command="/bin/bash" {
+          start_suspended true
+          args "-c" "docker-compose exec rails bin/rails db:setup"
+        }
+        pane name="console" command="/bin/bash" {
+          start_suspended true
+          args "-c" "docker-compose exec rails bin/rails c"
+        }
+      }
     }
   }
 
   tab name="test" {
-    pane name="bin/test" command="/bin/bash" {
+    pane name="rspec" command="/bin/bash" {
       start_suspended true
-      args "-c" "PATH=$(dirname $(mise which ruby)):$PATH bin/test"
-    }
-
-    pane size="10%" command="tail" {
-      start_suspended true
-      args "-f" "log/test.log"
+      args "-c" "docker-compose exec -e RAILS_ENV=test rails bundle exec rspec"
     }
   }
 
   tab name="clai" {
-    pane name="gemini" command="/bin/bash" {
-      start_suspended true
-      args "-c" "eval \"$(mise activate bash)\" && gemini"
-    }
+    pane name="claude" command="claude"
   }
 
   tab name="dev" focus=true {
     pane name="shell" command="zsh"
-
-    pane size="10%" command="/bin/bash" {
-      start_suspended true
-      args "-c" "bin/rails console"
-    }
   }
 
   tab name="prod" {
-    pane name="deploy" command="/bin/bash" {
+    pane name="console" command="/bin/bash" {
       start_suspended true
-      args "-c" "cd ../$(basename \"$PWD\")--deploy && git checkout main && git pull && bin/kamal deploy"
+      args "-c" "doctl apps console 718b3c3c-82b1-4ec1-9aa3-af5a7d6b4f29 leadscor"
     }
-
-    pane name="logs" command="/bin/bash" size="10%" {
+    pane name="logs" command="/bin/bash" {
       start_suspended true
-      args "-c" "bin/kamal app logs -f"
-    }
-
-    pane name="console" command="/bin/bash" size="10%" {
-      start_suspended true
-      args "-c" "bin/kamal app exec -i bin/rails console"
-    }
-
-    pane name="ssh" command="ssh" size="10%" {
-      start_suspended true
-      args "root@server.reportcard.pro"
+      args "-c" "doctl apps logs rate-my-leads -f"
     }
   }
 
-  tab name="demo" {
-    pane name="deploy" command="/bin/bash" {
-      start_suspended true
-      args "-c" "cd ../$(basename \"$PWD\")--deploy && git fetch origin main demo && git checkout -B demo origin/demo && git rebase origin/main && bin/kamal deploy -d demo"
-    }
-
-    pane name="logs" command="/bin/bash" size="10%" {
-      start_suspended true
-      args "-c" "bin/kamal app logs -f -d demo"
-    }
-
-    pane name="console" command="/bin/bash" size="10%" {
-      start_suspended true
-      args "-c" "bin/kamal app exec -i bin/rails console -d demo"
-    }
-
-    pane name="ssh" command="ssh" size="10%" {
-      start_suspended true
-      args "root@server.omrreport.com"
-    }
-  }
-
-  tab name="libs" {
-    pane name="cropper" cwd="lib/omr_cropper"
-    pane name="checker" cwd="lib/omr_checker"
-  }
-
-  tab name="whetstone" {
-    pane name="zellij editor" command="nvim" cwd="~/.config/zellij/layouts/" {
-      start_suspended true;
-      args "."
-    }
-
-    pane size="10%" cwd="~/.config/zellij/layouts/" command="zsh"
-  }
-
-  tab name="monitor" {
-    pane name="htop" command="htop" {
-      start_suspended true;
-    }
-
-    pane name="sensors" command="watch sensors" {
-      start_suspended true;
-    }
-  }
 }
 
